@@ -6,13 +6,13 @@ class MapIndividual:
         self.map_name = map_name
         self.height = height
         self.width = width
-        self.map_terrain = "_"  #in the beginning, assume all terrain patches are defaulted to an underscore _
+        self.map_terrain = "\u2656"  #in the beginning, assume all terrain patches are defaulted to an underscore _
         self.map_matrix = []
 
         for row in range(self.height):
             self.map_matrix.append([])
             for col in range(self.width):
-                self.map_matrix[-1].append(self.map_terrain)
+                self.map_matrix[-1].append(self.map_terrain + "\t")
 
         self.imported_playable_chars = imported_playable_chars
         self.place_playable_chars()
