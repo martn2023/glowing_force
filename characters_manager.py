@@ -1,5 +1,5 @@
 class Characters:
-    def __init__(self, display_name: str, char_class: str, map_icon, maximum_health: int, attack_power: int, physical_armor: int, initiative: int, mobility: int, physical_attack_range: int):
+    def __init__(self, display_name: str, char_class: str, map_icon, maximum_health: int, attack_power: int, physical_armor: int, initiative: int, mobility: int, physical_attack_range: int, row_index: int, col_index: int):
         self.display_name = display_name
         self.char_class = char_class
         self.map_icon = map_icon
@@ -10,17 +10,16 @@ class Characters:
         self.initiative = initiative  # for now, assume the player does not have choice of order
         self.mobility = mobility
         self.physical_attack_range = physical_attack_range
-        self.row_index = 0
-        self.col_index = 0
+        self.row_index = row_index
+        self.col_index = col_index
 
         print(f"DUNGEON MASTER: {self.display_name} ({self.char_class}) has been recruited.")
 
 
-class CharacterLibrary:
+class CharacterLibrary: #for now, this only holds PLAYABLE characters, because the NPCs are created and stored within the map
     def __init__(self):
         print(f"BACKEND: Char library created")
         self.playable_characters = set()
-        self.non_playable_characters = set()  # might be redundant for now
 
     def show_playable_char_keys(self):
         list_of_character_keys = []
@@ -31,7 +30,7 @@ class CharacterLibrary:
     def show_playable_char_names(self):
         list_of_character_names = []
         for each_object in self.playable_characters:
-            list_of_character_names.append(each_object.display_name)
+            list_of_character_names.append(each_object.display_name + " " + each_object.map_icon )
         return list_of_character_names
 
     def show_playable_char_icons(self):
