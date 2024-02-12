@@ -1,2 +1,3 @@
 Big Warrior,warrior,"",16,4,3,4,3,1,0,1
 Small Warrior,warrior,"",9,4,3,4,3,1,0,3
+Medium Warrior,warrior,"",13,4,3,4,3,1,0,5

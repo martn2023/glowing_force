@@ -53,12 +53,13 @@ class GameInstance:
         if map_number ==1:
             first_map = map_manager.MapIndividual("Awakened Forrest", 3,5, self.playable_characters, map_number)
             first_map.print_map_backend()
+            self.active_maps.append(first_map)
 
 
         elif map_number == 2:
             second_map = map_manager.MapIndividual("Broken Plains", 5, 6, self.playable_characters, map_number)
             second_map.print_map_backend()
-
+            self.active_maps.append(second_map)
 
         else:
             self.game_over("the game developers ran out of maps.")

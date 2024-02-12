@@ -42,7 +42,7 @@ class MapIndividual:
         print("BACKEND: creating and placing npcs")
         file_path = "map_models/map" + str(self.map_number) + ".txt"  #careful with the (lack of) leading zeros, this won't work after 9th map
         map_specific_npc_file_lines = open(file_path, 'r').readlines()
-
+        print(map_specific_npc_file_lines)
         for each_line in map_specific_npc_file_lines:
             #print("each line", each_line)
             individual_npc_input = each_line.split(",")
