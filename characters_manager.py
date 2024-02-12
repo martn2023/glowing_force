@@ -12,6 +12,7 @@ class Characters:
         self.physical_attack_range = physical_attack_range
         self.row_index = row_index
         self.col_index = col_index
+        self.playable = False ##assumes all chars are NPCs until told otherwise
 
         print(f"DUNGEON MASTER: {self.display_name} ({self.char_class}) has been spotted: {self.map_icon}")
 

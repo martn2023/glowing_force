@@ -2,6 +2,7 @@ import characters_manager
 
 class MapIndividual:
     def __init__(self, map_name: str, height: int, width: int, imported_playable_chars, map_number):
+
         self.map_number = map_number
         self.map_name = map_name
         self.height = height
@@ -20,6 +21,17 @@ class MapIndividual:
         self.create_non_playable_chars()
         self.place_non_playable_chars()
 
+
+        self.status = "in progress" ## assume that the 3 options are (in progress / completed / failed) THIS CODE ISNT BEING LEVERAGED JUST YET
+
+        self.round_number = 0
+        while self.status == "in progress":
+            if self.round_number == 5: ## temporary code to block infinite loops
+                break
+
+            self.next_round()
+
+
     def place_playable_chars(self):
         print(f"BACKEND: Placing playable chars onto {self.map_name}")
         bottom_row = len(self.map_matrix)-1
@@ -35,18 +47,14 @@ class MapIndividual:
             print(f"BACKEND: Placing playable chars onto {self.map_name}")
             for npc_object in self.non_playable_chars:
                 self.map_matrix[npc_object.row_index][npc_object.col_index] = npc_object
-                print(f"placing npc: {npc_object.display_name}, {npc_object.map_icon}")
-
+                #print(f"placing npc: {npc_object.display_name}, {npc_object.map_icon}")
 
     def create_non_playable_chars(self):
         print("BACKEND: creating and placing npcs")
         file_path = "map_models/map" + str(self.map_number) + ".txt"  #careful with the (lack of) leading zeros, this won't work after 9th map
         map_specific_npc_file_lines = open(file_path, 'r').readlines()
-        print(map_specific_npc_file_lines)
         for each_line in map_specific_npc_file_lines:
-            #print("each line", each_line)
             individual_npc_input = each_line.split(",")
-            #print("post split", individual_npc_input)
             individual_npc_input[-1] = individual_npc_input[-1][:-1]
 
             display_name = individual_npc_input[0]
@@ -75,7 +83,6 @@ class MapIndividual:
 
             self.non_playable_chars.append(new_npc)
 
-
     def print_map_backend(self):
         print("\n", "\t", self.map_name)
         top_border = "\t" + "MAP:" + "\t" + " " + "\t"
@@ -94,3 +101,7 @@ class MapIndividual:
                 traversed_row_with_tabs += content_for_display + "\t"
 
             print("\t" + "MAP:", "\t", row_index, "\t", traversed_row_with_tabs)
+
+    def next_round(self):
+        self.round_number += 1
+        print(f"DUNGEON MASTER: Round {self.round_number} begins")

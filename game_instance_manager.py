@@ -19,6 +19,10 @@ class GameInstance:
         char_2 = characters_manager.Characters("Black Widow","rogue","\u2659",11,5,1, 3,5,1,0,0)
         char_3 = characters_manager.Characters("Hawkeye","hunter","\u2657",12,5,1,3,4,2,0,0)
 
+        char_1.playable = True
+        char_2.playable = True
+        char_3.playable = True
+
         self.playable_characters.playable_characters.add(char_1)
         self.playable_characters.playable_characters.add(char_2)
         self.playable_characters.playable_characters.add(char_3)
@@ -30,7 +34,7 @@ class GameInstance:
         print("DUNGEON MASTER: What do you want to do?", "\n")
         print("1: Enter next map")
         print("2: See who's on my team")
-        print("3: Quit")
+        print("3: Quit", "\n") ## we should get in the habit of adding line breaks at end of prompt
 
         decision = int(input(""))  # int converter or else numbers will be in string format
 

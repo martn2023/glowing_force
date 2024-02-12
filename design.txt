@@ -1,0 +1,64 @@
+BACKEND FLOW:
+
+
+
+
+1. MAP CREATED
+    A) ATTRIBUTES
+        the map.status is going to determine
+            whether the map/stage needs another round
+            whether the round needs another turn, bc we assume the game can only end after a character's turn (whether death has occured)
+
+    B) FUNCTIONS
+        i. checking for a win condition e.g.
+            if all NPCS have hp <= 0: "complete"
+            elif all playables have hp <=0: "failed"
+            else: pass
+
+
+        ii. HIERCHACHY OF PLAYER DECISIONS
+            stage > round > turn (move + attack)
+
+            within a stage:
+                we only check win condition, then go to the next round (1)
+
+            within a round:
+                we check win condition, then decided if we even need additional TURNS
+                at the start of the round, we determine turn chronology priority based on initiation scores (to be refreshed each turn in case something levels up)
+                we then loop through the list announcing whether
+                    it's a CHARACTER's turn
+                    vs whether we are skipping the character due to its death
+
+                    active turn
+
+
+            within a turn:
+                decide where you can move based on
+                    distance
+                    (UNNECESSARILY COMPLICATED) what available coordinates are open (covered with default terrain), same as the search used in island counting
+                    user will enter two coords and loop until it gets two numbers that link to an empty cell
+                    set that index equal to the object, and set old map_matrix to blank terrain, and probably set up those xy coordinates within the object
+
+                    assuming coords are different, print new map
+
+                    at end of move, ACTIVATE ATTACKING
+                    ask if it wants to attack any coords
+                    user will enter 2 coords etc
+                    if target has a Character, and character.playable == False:
+                        CALL THE COMBAT FUNCTION WITH ATTACKING/DEFENDER
+
+
+                combat:
+                    attack gets to attack first and there's damage calculations
+                        call COMBAT CALCULATOR FUNCTION
+                    defender gets to counterattack there's damage calculations
+                        call COMBAT CALCULATOR FUNCTION
+
+                    if someone dies, announce their deaths, or else say both are still alive
+
+                    if dead, replace on map with terrain
+
+                combat_calculator function
+
+
+2.
