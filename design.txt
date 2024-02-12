@@ -20,7 +20,7 @@ BACKEND FLOW:
             stage > round > turn (move + attack)
 
             within a stage:
-                we only check win condition, then go to the next round (1)
+                we only check win status, then go to the next round (1). doing a calculation would be redundant since this is being calculated at end of each turn
 
             within a round:
                 we check win condition, then decided if we even need additional TURNS

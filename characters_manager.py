@@ -20,9 +20,9 @@ class Characters:
 class CharacterLibrary: #for now, this only holds PLAYABLE characters, because the NPCs are created and stored within the map
     def __init__(self):
         print(f"BACKEND: Char library created")
-        self.playable_characters = set()
+        self.playable_characters = set()  ##this might come back to bite you bc the rest of the system assumes lists, not sets
 
-    def show_playable_char_keys(self):
+    def show_playable_char_keys(self): ##converting from a set to an array
         list_of_character_keys = []
         for object_id in self.playable_characters:
             list_of_character_keys.append(object_id)

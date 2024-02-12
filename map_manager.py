@@ -105,3 +105,5 @@ class MapIndividual:
     def next_round(self):
         self.round_number += 1
         print(f"DUNGEON MASTER: Round {self.round_number} begins")
+        alls_chars = self.imported_playable_chars.show_playable_char_keys() + self.non_playable_chars
+        alls_chars.sort(key=lambda x: x.initiative, reverse = True ) ## sorting by initiative, then reversing so highest score can go first
