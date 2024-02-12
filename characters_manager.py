@@ -13,7 +13,7 @@ class Characters:
         self.row_index = row_index
         self.col_index = col_index
 
-        print(f"DUNGEON MASTER: {self.display_name} ({self.char_class}) has been recruited.")
+        print(f"DUNGEON MASTER: {self.display_name} ({self.char_class}) has been spotted: {self.map_icon}")
 
 
 class CharacterLibrary: #for now, this only holds PLAYABLE characters, because the NPCs are created and stored within the map

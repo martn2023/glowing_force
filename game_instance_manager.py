@@ -54,18 +54,17 @@ class GameInstance:
             first_map = map_manager.MapIndividual("Awakened Forrest", 3,5, self.playable_characters, map_number)
             first_map.print_map_backend()
 
+
         elif map_number == 2:
             second_map = map_manager.MapIndividual("Broken Plains", 5, 6, self.playable_characters, map_number)
             second_map.print_map_backend()
+
 
         else:
             self.game_over("the game developers ran out of maps.")
 
     def enter_stage(self):
         print("Stage entered")
-
-
-
 
 
     def game_over(self, reason: str):
