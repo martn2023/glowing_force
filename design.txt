@@ -21,6 +21,7 @@ BACKEND FLOW:
 
             within a stage:
                 we only check win status, then go to the next round (1). doing a calculation would be redundant since this is being calculated at end of each turn
+                DON'T FORGET THAT WE NEED TO CONSIDER WHETHER DEAD PLAYERS ARE REVIVED OR LIVING PLAYERS HEALED TO FULL
 
             within a round:
                 we check win condition, then decided if we even need additional TURNS

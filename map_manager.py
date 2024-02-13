@@ -15,7 +15,7 @@ class MapIndividual:
             for col in range(self.width):
                 self.map_matrix[-1].append(self.map_terrain) ## not entirely necessary that we specify content as a logo, since it will only check character object vs. not character object
 
-        self.imported_playable_chars = imported_playable_chars
+        self.imported_playable_chars = imported_playable_chars ## this is a list, right?
         self.place_playable_chars()
         self.non_playable_chars = []
         self.create_non_playable_chars()
@@ -102,8 +102,97 @@ class MapIndividual:
 
             print("\t" + "MAP:", "\t", row_index, "\t", traversed_row_with_tabs)
 
+        print("\n")
+
     def next_round(self):
+        print("\n")
         self.round_number += 1
-        print(f"DUNGEON MASTER: Round {self.round_number} begins")
+        print(f"DUNGEON MASTER: --- Round {self.round_number} begins")
+
         alls_chars = self.imported_playable_chars.show_playable_char_keys() + self.non_playable_chars
         alls_chars.sort(key=lambda x: x.initiative, reverse = True ) ## sorting by initiative, then reversing so highest score can go first
+
+        for character in alls_chars:
+            self.take_turn(character)
+
+            if self.status != "in progress":
+                return None ## breaking the FOR LOOP because not all characters need to move if game is over
+
+    def take_turn(self, character_object):
+        print("\n")
+        if character_object.current_health <= 0:
+            print(f"BACKEND: {character_object.display_name} is dead - skipping.")
+            return None
+
+        print(f"DUNGEON MASTER: --- Round {self.round_number} | {character_object.display_name} gets his or her turn.")
+        self.move_char(character_object)
+        self.attack_step(character_object)
+
+    def move_char(self, character_object):
+        self.print_map_backend()
+        print(f"DUNGEON MASTER: {character_object.display_name} is at row: {character_object.row_index}  col: {character_object.col_index}, and can move up {character_object.mobility} spaces.")
+        destination_row = int(input(f"DUNGEON MASTER: What row will {character_object.display_name} go to? "))
+        destination_col = int(input(f"DUNGEON MASTER: What column will {character_object.display_name} go to? "))
+
+        while True:
+            try:
+                if self.map_matrix[destination_row][destination_col] == self.map_terrain:
+                    attempted_distance = abs(destination_row-character_object.row_index) +abs(destination_col-character_object.col_index)
+                    if attempted_distance > character_object.mobility:
+                        print(f"DUNGEON MASTER: {character_object.display_name} can move {character_object.mobility}, but not {attempted_distance} spaces.")
+                    else:
+                        print(f"BACKEND: {character_object.display_name} moved.") ## might remove this code
+                        self.map_matrix[character_object.row_index][character_object.col_index] = self.map_terrain
+                        self.map_matrix[destination_row][destination_col] = character_object
+                        character_object.row_index = destination_row
+                        character_object.col_index = destination_col
+                        break
+                else:
+                    print("DUNGEON MASTER: That spot is not empty.")
+            except:
+                print("DUNGEON: Not sure what you meant by that. I only accept numbers shown in the map.")
+
+            destination_row = int(input(f"DUNGEON MASTER: What row will {character_object.display_name} go to? "))
+            destination_col = int(input(f"DUNGEON MASTER: What column will {character_object.display_name} go to? "))
+
+
+
+
+    def attack_step(self, character_object):
+        self.print_map_backend()
+        while True:
+            print(f"DUNGEON MASTER: {character_object.display_name} searches for enemies to attack. ***Enter char's own coords to skip***")
+            attack_row = int(input(f"DUNGEON MASTER: What row will {character_object.display_name} attack? "))
+            attack_col = int(input(f"DUNGEON MASTER: What col will {character_object.display_name} attack? "))
+            print("\n")
+
+            try: ##catch invalid/unreadable entries first, THEN worry about whether this is a valid attack, a step-skip, or an invalid attack
+                if self.map_matrix[attack_row][attack_col] in self.imported_playable_chars.show_playable_char_keys():
+                    print("BACKEND: skipping attack step, delete this msg later") ## for deletion
+                    break
+                elif self.map_matrix[attack_row][attack_col] in self.non_playable_chars: ##found an enemy, so now we will attack
+                    attacker = character_object
+                    defender = self.map_matrix[attack_row][attack_col]
+                    if self.check_range_sufficiency(attacker, defender):
+                        self.engage_combat(attacker,defender)
+                    else:
+                        continue ## we are going to keep looping because target out of range
+                else: # no Character object bc we assume all chars are either in the imported playables list or the npc list
+                    print("DUNGEON MASTER: There's no enemy to attack there.")
+            except:
+                print("DUNGEON: Not sure what you meant by that. I only accept numbers shown in the map.")
+
+    def check_range_sufficiency(self, attacker_object,defender_object):
+        attempted_distance = abs(attacker_object.row_index - defender_object.row_index) + abs(attacker_object.col_index - defender_object.col_index)
+        if attempted_distance > attacker_object.physical_attack_range:
+            print(f"DUNGEON MASTER: {attacker_object.display_name} can attack {attacker_object.physical_attack_range} spaces away, but not {attempted_distance}.")
+            return False
+
+        return True
+
+
+    def engage_combat(self, attacker, defender): ## this is a seperate function because we currently assume that the attacker gets an attack, and then defender gets an attack, but there may be a day when someone gets multiple attacks
+        print("DUNGEON MASTER: MORTAL KOMBAAAAAT!!!!!!")
+
+
+        return None

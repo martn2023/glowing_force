@@ -15,9 +15,9 @@ class GameInstance:
     def build_team_of_chars(self):
         print("DUNGEON MASTER: It's time to build your team.")
         import characters_manager
-        char_1 = characters_manager.Characters("Thor","warrior","\u2656",15,4,3,4,3,1,0,0)
-        char_2 = characters_manager.Characters("Black Widow","rogue","\u2659",11,5,1, 3,5,1,0,0)
-        char_3 = characters_manager.Characters("Hawkeye","hunter","\u2657",12,5,1,3,4,2,0,0)
+        char_1 = characters_manager.Characters("Thor","warrior","\u2656",15,4,3,4,1,1,0,0)
+        char_2 = characters_manager.Characters("Black Widow","rogue","\u2659",11,5,1, 3,3,1,0,0)
+        char_3 = characters_manager.Characters("Hawkeye","hunter","\u2657",12,5,1,3,2,2,0,0)
 
         char_1.playable = True
         char_2.playable = True

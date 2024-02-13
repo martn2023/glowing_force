@@ -1,0 +1,12 @@
+consumable items:
+re-usable equipment/weapons/tools:
+cooldowns: the character is incapacitated after doing some huge move/using a major item
+
+
+map-wide effects
+area-of-effects
+
+death counter
+
+
+experience rewards + the scaling issues that come with it
