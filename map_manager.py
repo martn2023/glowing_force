@@ -114,7 +114,7 @@ class MapIndividual:
 
         for character in alls_chars:
             self.take_turn(character)
-
+            self.status = self.check_map_status()
             if self.status != "in progress":
                 return None ## breaking the FOR LOOP because not all characters need to move if game is over
 
@@ -164,27 +164,31 @@ class MapIndividual:
     def attack_step(self, character_object):
         self.print_map_backend()
         while True:
-            print(f"DUNGEON MASTER: {character_object.display_name} searches for enemies to attack. ***Enter char's own coords to skip***")
+            print(f"DUNGEON MASTER: {character_object.display_name} searches for enemies to attack. ***Enter char's own coords to skip***") ## might be easier if attacking terrain = skipping, but what happens in the freak accidents where the map has no empty no terrain?
             attack_row = int(input(f"DUNGEON MASTER: What row will {character_object.display_name} attack? "))
             attack_col = int(input(f"DUNGEON MASTER: What col will {character_object.display_name} attack? "))
             print("\n")
 
-            try: ##catch invalid/unreadable entries first, THEN worry about whether this is a valid attack, a step-skip, or an invalid attack
-                if self.map_matrix[attack_row][attack_col] in self.imported_playable_chars.show_playable_char_keys():
-                    print(f"BACKEND: {character_object.display_name} skips the attack step, delete this msg later") ## for deletion
-                    break
-                elif self.map_matrix[attack_row][attack_col] in self.non_playable_chars: ##found an enemy, so now we will attack
-                    attacker = character_object
-                    defender = self.map_matrix[attack_row][attack_col]
-                    if self.check_range_sufficiency(attacker, defender):
-                        self.engage_combat(attacker,defender)
-                        break
-                    else:
-                        continue ## we are going to keep looping because target out of range
-                else: # no Character object bc we assume all chars are either in the imported playables list or the npc list
-                    print("DUNGEON MASTER: There's no enemy to attack there.")
+            try:  #catch invalid/unreadable entries first, THEN worry about whether this is a valid attack, a step-skip, or an invalid attack
+                potential_target = self.map_matrix[attack_row][attack_col]
             except:
                 print("DUNGEON: Not sure what you meant by that. I only accept numbers shown in the map.")
+
+            if potential_target == self.map_terrain: ##first see if there's anything to attack or its empty terrain, then we worry about whether the target is friendly
+                print("DUNGEON MASTER: There's no enemy to attack there.")
+                continue
+
+            if self.hostility_check(character_object, potential_target):
+                attacker = character_object
+                defender = self.map_matrix[attack_row][attack_col]
+                if self.check_range_sufficiency(attacker, defender):
+                    self.engage_combat(attacker, defender)
+                    break
+
+            else:
+                print(f"BACKEND: {character_object.display_name} skips the attack step, because they tried to attack an ally.")  ## for deletion
+                break
+
 
     def check_range_sufficiency(self, attacker_object,defender_object):
         attempted_distance = abs(attacker_object.row_index - defender_object.row_index) + abs(attacker_object.col_index - defender_object.col_index)
@@ -217,3 +221,24 @@ class MapIndividual:
 
     def remove_char_from_map(self, char_object):
         self.map_matrix[char_object.row_index][char_object.col_index] = self.map_terrain
+
+    def hostility_check(self, attacker_object, defender_object):
+        return attacker_object.playable != defender_object.playable
+
+    def check_map_status(self):
+        print("BACKEND: checking map condition")
+        one_playable_alive = False
+        for playable in self.imported_playable_chars.show_playable_char_keys():
+            if playable.current_health > 0:
+                one_playable_alive = True
+                break
+
+        if one_playable_alive == False:
+            return "failed"
+
+        for npc in self.non_playable_chars: ##only need to find one living enemy
+            if npc.current_health > 0:
+                return "in progress"
+
+        return "complete"
+
