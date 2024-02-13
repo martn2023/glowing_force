@@ -10,3 +10,23 @@ death counter
 
 
 experience rewards + the scaling issues that come with it
+
+damage types:
+
+physical
+    melee
+    ranged
+
+magical (careful not to overnerdify the debuffs)
+    fire
+    ice
+    wind
+    disease
+    curse
+    poison
+
+DISPELLS
+
+RNG instant kills/saves
+
+DODGES

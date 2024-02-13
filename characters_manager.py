@@ -6,7 +6,7 @@ class Characters:
         self.maximum_health = maximum_health
         self.current_health = maximum_health
         self.attack_power = attack_power
-        self.physical_armor = physical_armor
+        self.physical_armor = physical_armor ## this will mitigate an attacker's Attack Power
         self.initiative = initiative  # for now, assume the player does not have choice of order
         self.mobility = mobility
         self.physical_attack_range = physical_attack_range

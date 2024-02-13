@@ -148,7 +148,10 @@ class MapIndividual:
                         character_object.col_index = destination_col
                         break
                 else:
-                    print("DUNGEON MASTER: That spot is not empty.")
+                    if destination_row == character_object.row_index and destination_col == character_object.col_index: ##making an exception if the object that's blocking the square is itself
+                        break
+                    else:
+                        print("DUNGEON MASTER: That spot is not empty.")
             except:
                 print("DUNGEON: Not sure what you meant by that. I only accept numbers shown in the map.")
 
@@ -168,13 +171,14 @@ class MapIndividual:
 
             try: ##catch invalid/unreadable entries first, THEN worry about whether this is a valid attack, a step-skip, or an invalid attack
                 if self.map_matrix[attack_row][attack_col] in self.imported_playable_chars.show_playable_char_keys():
-                    print("BACKEND: skipping attack step, delete this msg later") ## for deletion
+                    print(f"BACKEND: {character_object.display_name} skips the attack step, delete this msg later") ## for deletion
                     break
                 elif self.map_matrix[attack_row][attack_col] in self.non_playable_chars: ##found an enemy, so now we will attack
                     attacker = character_object
                     defender = self.map_matrix[attack_row][attack_col]
                     if self.check_range_sufficiency(attacker, defender):
                         self.engage_combat(attacker,defender)
+                        break
                     else:
                         continue ## we are going to keep looping because target out of range
                 else: # no Character object bc we assume all chars are either in the imported playables list or the npc list
@@ -191,8 +195,25 @@ class MapIndividual:
         return True
 
 
-    def engage_combat(self, attacker, defender): ## this is a seperate function because we currently assume that the attacker gets an attack, and then defender gets an attack, but there may be a day when someone gets multiple attacks
+    def engage_combat(self, attacker, defender): ## this is a separate function because we currently assume that the attacker gets an attack, and then defender gets an attack, but there may be a day when someone gets multiple attacks
         print("DUNGEON MASTER: MORTAL KOMBAAAAAT!!!!!!")
 
+        self.combat_action(attacker, defender)
+        if defender.current_health > 0: ## later, must address additional situation where the defender can't fight back (incapacitated for example)
+            self.combat_action(defender, attacker)
 
-        return None
+
+    def combat_action(self, damager, damaged):
+        attempted_damage = damager.attack_power
+        mitigated_damage = attempted_damage - damaged.physical_armor
+        damaged.current_health -= mitigated_damage
+
+        print(f"DUNGEON MASTER: {damager.display_name} attempted to attack {damaged.display_name} for {attempted_damage} physical damage, and was mitigated by {damaged.physical_armor}.")
+        print(f"DUNGEON MASTER: {damaged.display_name}'s health falls {mitigated_damage} points to {damaged.current_health}.")
+
+        if damaged.current_health <= 0: ##again, assumes for now this is the only way to die/be out of the map
+            print(f"DUNGEON MASTER: {damaged.display_name} died, and is now being removed from the map board.")
+            self.remove_char_from_map(damaged)
+
+    def remove_char_from_map(self, char_object):
+        self.map_matrix[char_object.row_index][char_object.col_index] = self.map_terrain
