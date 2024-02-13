@@ -21,8 +21,10 @@ class MapIndividual:
         self.create_non_playable_chars()
         self.place_non_playable_chars()
 
-
         self.status = "in progress" ## assume that the 3 options are (in progress / completed / failed) THIS CODE ISNT BEING LEVERAGED JUST YET
+
+        print("\n")
+        print(f"DUNGEON MASTER: ------Your party has entered map#{self.map_number}: {self.map_name}")
 
         self.round_number = 0
         while self.status == "in progress":
@@ -32,8 +34,10 @@ class MapIndividual:
             self.next_round()
 
 
+
+
     def place_playable_chars(self):
-        print(f"BACKEND: Placing playable chars onto {self.map_name}")
+        #print(f"BACKEND: Placing playable chars onto {self.map_name}")
         bottom_row = len(self.map_matrix)-1
         leftmost_col = 0
 
@@ -44,13 +48,13 @@ class MapIndividual:
             leftmost_col += 1  #avoiding overlap of PC placement
 
     def place_non_playable_chars(self): ## put htis code on hold bc we need to add x and y coordinates into npc inputs
-            print(f"BACKEND: Placing playable chars onto {self.map_name}")
+            #print(f"BACKEND: Placing playable chars onto {self.map_name}")
             for npc_object in self.non_playable_chars:
                 self.map_matrix[npc_object.row_index][npc_object.col_index] = npc_object
                 #print(f"placing npc: {npc_object.display_name}, {npc_object.map_icon}")
 
     def create_non_playable_chars(self):
-        print("BACKEND: creating and placing npcs")
+        #print("BACKEND: creating and placing npcs")
         file_path = "map_models/map" + str(self.map_number) + ".txt"  #careful with the (lack of) leading zeros, this won't work after 9th map
         map_specific_npc_file_lines = open(file_path, 'r').readlines()
         for each_line in map_specific_npc_file_lines:
@@ -141,7 +145,7 @@ class MapIndividual:
                     if attempted_distance > character_object.mobility:
                         print(f"DUNGEON MASTER: {character_object.display_name} can move {character_object.mobility}, but not {attempted_distance} spaces.")
                     else:
-                        print(f"BACKEND: {character_object.display_name} moved.") ## might remove this code
+                        #print(f"BACKEND: {character_object.display_name} moved.") ## might remove this code
                         self.map_matrix[character_object.row_index][character_object.col_index] = self.map_terrain
                         self.map_matrix[destination_row][destination_col] = character_object
                         character_object.row_index = destination_row

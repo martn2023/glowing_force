@@ -6,6 +6,7 @@ class GameInstance:
         self.player_name = "Martin"
         ##self.player_name = input("DUNGEON MASTER: What is your name?: ")
         print(f"DUNGEON MASTER: Welcome, {self.player_name}.")
+        print("\n")
         import characters_manager
         self.playable_characters = characters_manager.CharacterLibrary()
         self.build_team_of_chars()
@@ -51,7 +52,7 @@ class GameInstance:
         self.load_main_menu()
 
     def build_next_map(self, map_number: int):
-        print(f"BACKEND: building map # {map_number}")
+        #print(f"BACKEND: building map # {map_number}")
         import map_manager
 
         if map_number ==1:
