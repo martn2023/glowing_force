@@ -1,5 +1,5 @@
 import characters_manager
-
+import map_manager
 
 class GameInstance:
     def __init__(self):
@@ -16,7 +16,7 @@ class GameInstance:
     def build_team_of_chars(self):
         print("DUNGEON MASTER: It's time to build your team.")
         import characters_manager
-        char_1 = characters_manager.Characters("Thor","warrior","\u2656",15,17,2,4,1,1,0,0)
+        char_1 = characters_manager.Characters("Thor","warrior","\u2656",1,17,2,4,1,1,0,0)
         char_2 = characters_manager.Characters("Black Widow","rogue","\u2659",11,8,1, 3,3,1,0,0)
         char_3 = characters_manager.Characters("Hawkeye","hunter","\u2657",12,8,1,3,2,2,0,0)
 
@@ -24,18 +24,26 @@ class GameInstance:
         char_2.playable = True
         char_3.playable = True
 
+
         self.playable_characters.playable_characters.add(char_1)
+        """
         self.playable_characters.playable_characters.add(char_2)
         self.playable_characters.playable_characters.add(char_3)
+
+            TEMPORARILY REMOVING CODE TO SEE WHAT HAPPENS IF NO ALLIES ALIVE
+        """
 
         print(f"DUNGEON MASTER: Your team now has {self.playable_characters.show_playable_char_names() }")
 
     def load_main_menu(self):
         print("\n",)
+
+        print("DUNGEON MASTER: ---------Welcome to the MAIN MENU.")
+        self.count_stages_completed()
         print("DUNGEON MASTER: What do you want to do?", "\n")
-        print("1: Enter next map")
-        print("2: See who's on my team")
-        print("3: Quit", "\n") ## we should get in the habit of adding line breaks at end of prompt
+        print("\t","1: Enter next map")
+        print("\t","2: See who's on my team")
+        print("\t","3: Quit", "\n") ## we should get in the habit of adding line breaks at end of prompt
 
         decision = int(input(""))  # int converter or else numbers will be in string format
 
@@ -44,22 +52,26 @@ class GameInstance:
         elif decision == 2:
             print(self.playable_characters.show_playable_char_names())
         elif decision == 1:
-            print("DUNGEON MASTER: I see ", len(self.active_maps), f" map(s) in your records. Let's enter map # {1+len(self.active_maps)}.")
-            self.build_next_map(1+len(self.active_maps))
+            self.try_next_map()
         else:
             pass
 
         self.load_main_menu()
 
-    def build_next_map(self, map_number: int):
-        #print(f"BACKEND: building map # {map_number}")
-        import map_manager
+    def try_next_map(self):
+
+        if len(self.active_maps) >0 and self.active_maps[-1].status != "complete":
+            print(f"DUNGEON MASTER: You haven't completed {self.active_maps[-1].map_name} yet, so we are going back there.")
+            map_number = len(self.active_maps)
+            del self.active_maps[-1] ##need to remove last instance of the map so we don't get multiple attempts of same map
+        else:
+            map_number = 1+len(self.active_maps)
+
 
         if map_number ==1:
             first_map = map_manager.MapIndividual("Awakened Forrest", 3,5, self.playable_characters, map_number)
             first_map.print_map_backend()
             self.active_maps.append(first_map)
-
 
         elif map_number == 2:
             second_map = map_manager.MapIndividual("Broken Plains", 5, 6, self.playable_characters, map_number)
@@ -68,6 +80,7 @@ class GameInstance:
 
         else:
             self.game_over("the game developers ran out of maps.")
+
 
     def enter_stage(self):
         print("Stage entered")
@@ -83,4 +96,4 @@ class GameInstance:
             if active_map.status == "complete":
                 count_stages_completed += 1
 
-        print(f"DUNGEON MASTER: You have seen {self.active_maps} maps and completed {count_stages_beaten} of them.")
+        print(f"DUNGEON MASTER: You have seen {len(self.active_maps)} map(s) and completed {count_stages_completed} of them.")

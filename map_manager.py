@@ -112,6 +112,11 @@ class MapIndividual:
         alls_chars = self.imported_playable_chars.show_playable_char_keys() + self.non_playable_chars
         alls_chars.sort(key=lambda x: x.initiative, reverse = True ) ## sorting by initiative, then reversing so highest score can go first
 
+        self.status = self.check_map_status()
+        if self.status != "in progress":
+            return None  ## addressing ridiculous edge case where no allies load
+
+
         for character in alls_chars: ## this obviously assumes each character gets to go once and only once
             self.take_turn(character)
             self.status = self.check_map_status()
@@ -181,12 +186,12 @@ class MapIndividual:
             if self.hostility_check(character_object, potential_target):
                 attacker = character_object
                 defender = self.map_matrix[attack_row][attack_col]
-                if self.check_range_sufficiency(attacker, defender):
+                if self.check_range_sufficiency(attacker, defender): ## might make sense to rename from "attacker vs defender" to "active vs inactive character"
                     self.engage_combat(attacker, defender)
                     break
 
             else:
-                print(f"BACKEND: {character_object.display_name} skips the attack step, because they tried to attack an ally.")  ## for deletion
+                print(f"BACKEND: {character_object.display_name} skips the attack step, because they tried to attack someone on their own faction.")  ## for deletion
                 break
 
 
@@ -197,7 +202,6 @@ class MapIndividual:
             return False
 
         return True
-
 
     def engage_combat(self, attacker, defender): ## this is a separate function because we currently assume that the attacker gets an attack, and then defender gets an attack, but there may be a day when someone gets multiple attacks
         print("DUNGEON MASTER: MORTAL KOMBAAAAAT!!!!!!")
@@ -235,7 +239,7 @@ class MapIndividual:
 
         if one_playable_alive == False:
             print("\n")
-            print(f"DUNGEON MASTER: Everyone died.")
+            print(f"DUNGEON MASTER: There's nobody alive on your team.")
             print(f"DUNGEON MASTER: Your team failed to clear {self.map_name}.")
             return "failed"
 
