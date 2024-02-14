@@ -69,3 +69,15 @@ BACKEND FLOW:
 at this time, we dont have damage types e.g. physical vs magical (or within magical, different variants of magic)
 
     tools on table:
+
+
+
+3. FURTHER TESTING
+    when all my players die, will the map end
+    where is the stage failed screen to report the outcome?
+    if a map is failed, will it reset the map so you can try again
+        also, will the hp of the characters reset?
+
+    are we going to build a status check in so that you can see who's in the party, and what their stats are
+
+

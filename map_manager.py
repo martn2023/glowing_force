@@ -28,11 +28,7 @@ class MapIndividual:
 
         self.round_number = 0
         while self.status == "in progress":
-            if self.round_number == 5: ## temporary code to block infinite loops
-                break
-
             self.next_round()
-
 
 
 
@@ -116,7 +112,7 @@ class MapIndividual:
         alls_chars = self.imported_playable_chars.show_playable_char_keys() + self.non_playable_chars
         alls_chars.sort(key=lambda x: x.initiative, reverse = True ) ## sorting by initiative, then reversing so highest score can go first
 
-        for character in alls_chars:
+        for character in alls_chars: ## this obviously assumes each character gets to go once and only once
             self.take_turn(character)
             self.status = self.check_map_status()
             if self.status != "in progress":
@@ -230,7 +226,7 @@ class MapIndividual:
         return attacker_object.playable != defender_object.playable
 
     def check_map_status(self):
-        print("BACKEND: checking map condition")
+
         one_playable_alive = False
         for playable in self.imported_playable_chars.show_playable_char_keys():
             if playable.current_health > 0:
@@ -238,11 +234,17 @@ class MapIndividual:
                 break
 
         if one_playable_alive == False:
+            print("\n")
+            print(f"DUNGEON MASTER: Everyone died.")
+            print(f"DUNGEON MASTER: Your team failed to clear {self.map_name}.")
             return "failed"
 
         for npc in self.non_playable_chars: ##only need to find one living enemy
             if npc.current_health > 0:
                 return "in progress"
 
+        print("\n")
+        print("DUNGEON MASTER: There are no living enemies.")
+        print(f"DUNGEON MASTER: Congratulations on clearing {self.map_name}!")
         return "complete"
 

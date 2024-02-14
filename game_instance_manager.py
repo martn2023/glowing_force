@@ -76,3 +76,11 @@ class GameInstance:
     def game_over(self, reason: str):
         print("\n","\n","----------------GAME OVER----------------", "\n", "The game ended because", reason)
         exit() # take note that is the first time I used the exit command
+
+    def count_stages_completed(self):
+        count_stages_completed = 0
+        for active_map in self.active_maps:
+            if active_map.status == "complete":
+                count_stages_completed += 1
+
+        print(f"DUNGEON MASTER: You have seen {self.active_maps} maps and completed {count_stages_beaten} of them.")
