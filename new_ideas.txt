@@ -1,3 +1,20 @@
+INTERFACE:
+    time delay on messages, maybe customized per player
+    game_instance - specific settings, such as time delay on msgs
+    game_instances summoned/labeled by player name or a concatenation of player name and start date
+
+
+    consider denoting the map # when announcing a round?
+
+GAMEPLAY:
+
+multiple characters? Make 5 and let player draft 3 at the start?
+multi player mode - 3 different USERS bring 3 different characters so it's 9 vs the board?
+
+
+COMBAT LOG
+    do we want to say specifically that dmg was mitigated by "physical armor"?
+
 consumable items:
 re-usable equipment/weapons/tools:
 cooldowns: the character is incapacitated after doing some huge move/using a major item

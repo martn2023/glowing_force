@@ -24,14 +24,9 @@ class GameInstance:
         char_2.playable = True
         char_3.playable = True
 
-
         self.playable_characters.playable_characters.add(char_1)
-        """
         self.playable_characters.playable_characters.add(char_2)
         self.playable_characters.playable_characters.add(char_3)
-
-            TEMPORARILY REMOVING CODE TO SEE WHAT HAPPENS IF NO ALLIES ALIVE
-        """
 
         print(f"DUNGEON MASTER: Your team now has {self.playable_characters.show_playable_char_names() }")
 

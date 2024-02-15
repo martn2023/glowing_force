@@ -40,6 +40,7 @@ class MapIndividual:
         for character_object in self.imported_playable_chars.show_playable_char_keys():  # in early versions, assume there is enough space at bottom-left of map to hold all the teammates
             character_object.row_index = bottom_row
             character_object.col_index = leftmost_col
+            character_object.current_health = character_object.maximum_health ## if won't revive fallen playables, map might end before it started
             self.map_matrix[character_object.row_index][character_object.col_index] = character_object
             leftmost_col += 1  #avoiding overlap of PC placement
 
