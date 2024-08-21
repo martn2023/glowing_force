@@ -19,7 +19,6 @@ This is my first self-directed project.
 	    2. Storing and sharing code in GitHub
 	    3. Better naming
 
-  
 
 **OVERVIEW**:
 
@@ -29,6 +28,15 @@ This is my first self-directed project.
 	STAGE 2: The next project will be a proof-of-concept with PyGame, where I will prove visuals
 	STAGE 3: Rebuild stage 1 with PyGame so the visuals match the backend code
 	STAGE 4: Rebuild stage 3 with more features
+
+![glowingforce1](https://github.com/user-attachments/assets/4b47005e-fec6-443d-b5f4-85255fe0aa9f)
+
+![glowingforce2](https://github.com/user-attachments/assets/320f0b86-8d54-4e0d-9dc0-12e5ba216f97)
+
+![glowingforce3](https://github.com/user-attachments/assets/ed437522-5612-49e8-8d84-741c4b118fe0)
+
+![glowingforce4](https://github.com/user-attachments/assets/4fff5a01-7bdc-463b-af21-4e8fbe8107f8)
+
 
 **DOD** :
 1. START SCREEN THAT ALLOWS PLAYER TO ENTER UNFINISHED MAPS
