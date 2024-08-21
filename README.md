@@ -1,4 +1,10 @@
-This is my first self-directed project.
+**AUTHOR'S CONTEXT**:
+
+This is my first self-directed project, meaning:
+1. I came up with the product idea, and architecture decisions all by myself.
+2. All code and comments were written without any assistance i.e. I wrote every line by myself without leaning on other people or ChatGPT.
+
+This is different from the GeekTrust project where someone else laid out clearly defined input instructions and output requirements, and is also different from the book library project (hidden from GitHub now) which was my first CRUD system, but relied heavily on Mozilla's tutorial.
 
 **PROJECT GOALS**:
 
