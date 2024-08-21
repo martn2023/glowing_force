@@ -1,3 +1,12 @@
+![glowingforce1](https://github.com/user-attachments/assets/4b47005e-fec6-443d-b5f4-85255fe0aa9f)
+
+![glowingforce2](https://github.com/user-attachments/assets/320f0b86-8d54-4e0d-9dc0-12e5ba216f97)
+
+![glowingforce3](https://github.com/user-attachments/assets/ed437522-5612-49e8-8d84-741c4b118fe0)
+
+![glowingforce4](https://github.com/user-attachments/assets/4fff5a01-7bdc-463b-af21-4e8fbe8107f8)
+
+
 **AUTHOR'S CONTEXT**:
 
 This is my first self-directed project, meaning:
@@ -35,14 +44,7 @@ This is different from the GeekTrust project where someone else laid out clearly
 	STAGE 3: Rebuild stage 1 with PyGame so the visuals match the backend code
 	STAGE 4: Rebuild stage 3 with more features
 
-![glowingforce1](https://github.com/user-attachments/assets/4b47005e-fec6-443d-b5f4-85255fe0aa9f)
-
-![glowingforce2](https://github.com/user-attachments/assets/320f0b86-8d54-4e0d-9dc0-12e5ba216f97)
-
-![glowingforce3](https://github.com/user-attachments/assets/ed437522-5612-49e8-8d84-741c4b118fe0)
-
-![glowingforce4](https://github.com/user-attachments/assets/4fff5a01-7bdc-463b-af21-4e8fbe8107f8)
-
+This is the game from 30 years ago that inpsired my project: https://youtu.be/4Ef4kyF8j1c?t=326
 
 **DOD** :
 1. START SCREEN THAT ALLOWS PLAYER TO ENTER UNFINISHED MAPS
